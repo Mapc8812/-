@@ -9,6 +9,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Greeting } from './components/Greeting';
 import { Countdown } from './components/Countdown';
+import { EventDetails } from './components/EventDetails';
 import { PhotoGallery } from './components/PhotoGallery';
 import { LocationMap } from './components/LocationMap';
 import { RsvpForm } from './components/RsvpForm';
@@ -148,6 +149,8 @@ export default function App() {
 
         {/* Live Countdown Timer */}
         <Countdown config={config} />
+
+        <EventDetails config={config} />
 
         {/* Photo Gallery & Modal Lightbox */}
         <PhotoGallery
