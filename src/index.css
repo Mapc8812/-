@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --gold-primary: #D4AF37;
+    --gold-light: #F3E5AB;
+    --gold-dark: #997A15;
+    --gold-ambient: rgba(212, 175, 55, 0.15);
+  }
+
+  *, html, body, button, input, select, textarea {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+  }
+
+  body {
+    background-color: #08080A;
+    color: #E7E5E4;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-serif, .font-display, .font-sans {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+  }
+}
+
+/* Luxury gold text gradients */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFF4D0 0%, #E6C875 25%, #D4AF37 50%, #AA8222 75%, #F5E296 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold-glow {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 0 40px rgba(212, 175, 55, 0.2);
+}
+
+.border-gold-glow {
+  box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.25), inset 0 0 15px -3px rgba(212, 175, 55, 0.1);
+}
+
+/* Glassmorphism luxury cards */
+.glass-gold-card {
+  background: linear-gradient(145deg, rgba(24, 23, 20, 0.75) 0%, rgba(12, 12, 14, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+}
+
+.glass-gold-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-gold-card-hover:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7), 0 0 25px -3px rgba(212, 175, 55, 0.25);
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, rgba(212,175,55,0) 0%, rgba(255,245,200,0.3) 50%, rgba(212,175,55,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 4s infinite linear;
+}
+
+/* Subtle gentle floating animation */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+}
+
+.animate-float-gentle {
+  animation: floatGentle 6s ease-in-out infinite;
+}
+
+/* Subtle breathing glow */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.04);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
