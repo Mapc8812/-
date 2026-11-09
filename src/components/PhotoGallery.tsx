@@ -10,19 +10,7 @@ interface PhotoGalleryProps {
 
 export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, onDeletePhoto }) => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>('all');
   const [showUploadInput, setShowUploadInput] = useState(false);
-
-  const categories = [
-    { id: 'all', label: 'Бүх Зургууд' },
-    { id: 'ceremony', label: 'Шагнал Гардуулалт' },
-    { id: 'medal', label: 'Медаль' },
-    { id: 'family', label: 'Гэр Бүл & Хүндэтгэл' }
-  ];
-
-  const filteredPhotos = activeCategory === 'all'
-    ? photos
-    : photos.filter(p => p.category === activeCategory);
 
   const handleOpenLightbox = (index: number) => {
     setSelectedPhotoIndex(index);
@@ -35,13 +23,13 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (selectedPhotoIndex === null) return;
-    setSelectedPhotoIndex((prev) => (prev! > 0 ? prev! - 1 : filteredPhotos.length - 1));
+    setSelectedPhotoIndex((prev) => (prev! > 0 ? prev! - 1 : photos.length - 1));
   };
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (selectedPhotoIndex === null) return;
-    setSelectedPhotoIndex((prev) => (prev! < filteredPhotos.length - 1 ? prev! + 1 : 0));
+    setSelectedPhotoIndex((prev) => (prev! < photos.length - 1 ? prev! + 1 : 0));
   };
 
   const handleFilesUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,8 +42,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
           onAddPhoto({
             id: `custom-${Date.now()}-${idx}`,
             url,
-            caption: file.name.replace(/\.[^/.]+$/, "") || "Дурсгалын гэрэл зураг",
-            category: 'ceremony'
+            caption: file.name.replace(/\.[^/.]+$/, "") || "Дурсгалын гэрэл зураг"
           });
         };
         reader.readAsDataURL(file);
@@ -90,22 +77,8 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
           Төрийн дээд шагнал гардах агшин, бахархал ба түүхэн дурсамжууд
         </p>
 
-        {/* Filter & Upload Action buttons */}
+        {/* Upload action */}
         <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
-          {photos.length > 0 && categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer ${
-                activeCategory === cat.id
-                  ? 'bg-amber-400 text-stone-950 font-semibold shadow-md shadow-amber-400/20'
-                  : 'bg-stone-900/60 text-stone-400 border border-stone-800 hover:text-stone-200 hover:border-stone-700'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-
           {/* Add photo trigger */}
           <button
             onClick={() => setShowUploadInput(!showUploadInput)}
@@ -173,7 +146,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
       ) : (
         /* Grid of photos */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {filteredPhotos.map((photo, index) => (
+          {photos.map((photo, index) => (
             <div
               key={photo.id}
               onClick={() => handleOpenLightbox(index)}
@@ -186,9 +159,6 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
                 loading="lazy"
               />
-              {/* Scrim gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/30 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
-
               {/* Action buttons (Zoom + Delete) */}
               <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                 {onDeletePhoto && (
@@ -205,19 +175,13 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
                 </div>
               </div>
 
-              {/* Bottom Caption */}
-              <div className="absolute bottom-0 inset-x-0 p-3.5 text-left">
-                <p className="text-xs font-serif font-medium text-amber-100 line-clamp-2 drop-shadow-md">
-                  {photo.caption}
-                </p>
-              </div>
             </div>
           ))}
         </div>
       )}
 
       {/* Lightbox Modal */}
-      {selectedPhotoIndex !== null && filteredPhotos[selectedPhotoIndex] && (
+      {selectedPhotoIndex !== null && photos[selectedPhotoIndex] && (
         <div
           onClick={handleCloseLightbox}
           className="fixed inset-0 z-50 bg-stone-950/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8 animate-fadeIn"
@@ -228,7 +192,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
           <div className="absolute top-5 right-5 z-20 flex items-center gap-3">
             {onDeletePhoto && (
               <button
-                onClick={(e) => handleDelete(e, filteredPhotos[selectedPhotoIndex].id)}
+                onClick={(e) => handleDelete(e, photos[selectedPhotoIndex].id)}
                 className="px-3.5 py-2 rounded-full bg-rose-950/80 border border-rose-500/40 text-xs text-rose-200 hover:text-white flex items-center gap-1.5 cursor-pointer transition-colors"
                 title="Энэ зургийг устгах"
               >
@@ -246,7 +210,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
           </div>
 
           {/* Previous button */}
-          {filteredPhotos.length > 1 && (
+          {photos.length > 1 && (
             <button
               onClick={handlePrev}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-stone-900/80 border border-amber-500/40 flex items-center justify-center text-amber-200 hover:text-white hover:bg-stone-800 transition-colors cursor-pointer"
@@ -257,7 +221,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
           )}
 
           {/* Next button */}
-          {filteredPhotos.length > 1 && (
+          {photos.length > 1 && (
             <button
               onClick={handleNext}
               className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-stone-900/80 border border-amber-500/40 flex items-center justify-center text-amber-200 hover:text-white hover:bg-stone-800 transition-colors cursor-pointer"
@@ -274,18 +238,15 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onAddPhoto, 
           >
             <div className="relative rounded-2xl overflow-hidden border-2 border-amber-500/50 shadow-2xl shadow-amber-500/20 max-h-[75vh]">
               <img
-                src={filteredPhotos[selectedPhotoIndex].url}
-                alt={filteredPhotos[selectedPhotoIndex].caption}
+                src={photos[selectedPhotoIndex].url}
+                alt={photos[selectedPhotoIndex].caption}
                 referrerPolicy="no-referrer"
                 className="max-h-[72vh] w-auto max-w-full object-contain"
               />
             </div>
-            <div className="mt-4 text-center max-w-xl px-4">
-              <p className="text-base sm:text-lg font-serif text-amber-200 font-medium">
-                {filteredPhotos[selectedPhotoIndex].caption}
-              </p>
+            <div className="mt-4 text-center">
               <span className="text-xs text-stone-400 mt-1 block">
-                {selectedPhotoIndex + 1} / {filteredPhotos.length}
+                {selectedPhotoIndex + 1} / {photos.length}
               </span>
             </div>
           </div>

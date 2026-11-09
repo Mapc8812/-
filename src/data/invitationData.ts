@@ -3,18 +3,10 @@
  * Сэдэв: Хөдөлмөрийн Хүндэт Медалиар шагнагдсаны хүндэтгэлийн найр
  */
 
-export interface EventProgramItem {
-  time: string;
-  title: string;
-  description: string;
-  highlight?: boolean;
-}
-
 export interface GalleryPhoto {
   id: string;
   url: string;
   caption: string;
-  category: 'medal' | 'ceremony' | 'family' | 'art';
 }
 
 export interface GuestRSVP {
@@ -39,7 +31,6 @@ export interface InvitationConfig {
   venueName: string;
   venueRoom: string;
   venueAddress: string;
-  dressCode: string;
   contactPhones: string[];
   hostFamily: string;
   mapEmbedUrl: string;
@@ -58,58 +49,62 @@ export const initialInvitationConfig: InvitationConfig = {
   venueName: "Багануур дүүргийн «Залуус» төв",
   venueRoom: "6 давхарт (Хүлээн авалтын танхим)",
   venueAddress: "Улаанбаатар хот, Багануур дүүрэг, Залуус төвийн 6 давхарт",
-  dressCode: "Үндэсний хэв маяг бүхий ёслолын хувцас / Dark formal suit",
   contactPhones: ["88038681"],
   hostFamily: "Жадамбын Хишиг-Эрдэнэ",
   mapEmbedUrl: "https://maps.google.com/maps?q=47.7778302,108.3692642&t=&z=16&ie=UTF8&iwloc=&output=embed",
   mapDirectionsUrl: "https://maps.app.goo.gl/sTu5cccSMeXfXvPY7"
 };
 
-export const defaultProgramTimeline: EventProgramItem[] = [
-  {
-    time: "11:00",
-    title: "Хүндэт зочдыг угтан авах ёслол",
-    description: "Хүндэтгэлийн хүлээн авалт, дурсгалын зураг татуулах, Welcome Drink",
-    highlight: false
-  },
-  {
-    time: "11:30",
-    title: "Хүндэтгэлийн найрын нээлт",
-    description: "Ёслолын нээлтийн үг, Одон гардан авсан агшны түүхэн замнал, баримтат дүрс бичлэг",
-    highlight: true
-  },
-  {
-    time: "12:00",
-    title: "Төрийн дээд шагналд зориулсан хундага өргөлт",
-    description: "Төр түмний хүндэтгэл, үр хүүхэд, ахан дүүс, хамт олны баярын ерөөл, мэндчилгээ",
-    highlight: true
-  },
-  {
-    time: "12:30",
-    title: "Үндэсний урлагийн хүндэтгэлийн тоглолт",
-    description: "Морин хуурын аялгуу, Ардын болон уртын дуу, Цэнгээнт бүжгийн тусгай үзүүлбэр",
-    highlight: false
-  },
-  {
-    time: "13:30",
-    title: "Хүндэтгэлийн найрын зоог & Дурсамж яриа",
-    description: "Дээд зэрэглэлийн зоог, хамтран ажилласан үе үеийн нөхөд, ахан дүүсийн дурсамж",
-    highlight: false
-  },
-  {
-    time: "14:30",
-    title: "Дурсгалын бэлэг гардуулах & Хаалтын зураг",
-    description: "Талархлын үг, хүндэт зочдын нэгдсэн дурсгалын гэрэл зураг татуулах ёслол",
-    highlight: true
-  }
-];
-
 export const defaultGalleryPhotos: GalleryPhoto[] = [
   {
     id: "order-red-banner",
     url: "/assets/aistudio/image_46c61168.png",
-    caption: "Монгол Улсын Төрийн дээд шагнал «Хөдөлмөрийн гавьяаны улаан тугийн одон»",
-    category: "medal"
+    caption: "Монгол Улсын Төрийн дээд шагнал «Хөдөлмөрийн гавьяаны улаан тугийн одон»"
+  },
+  {
+    id: "uploaded-family-group-1",
+    url: "/assets/fffcc3de-eb1c-4fb3-8497-7e7184645105.jpg",
+    caption: "Хүндэтгэлийн баярын дурсгалын зураг"
+  },
+  {
+    id: "uploaded-honoree-portrait-1",
+    url: "/assets/cb0bafaa-bb2d-4a96-93a0-1e1025f1b404.jpg",
+    caption: "Одонгоо гардан авсан баярт мөч"
+  },
+  {
+    id: "uploaded-family-group-2",
+    url: "/assets/8a85b1ff-dbca-45c5-a4e2-ba067cb0110b.jpg",
+    caption: "Гэр бүл, дотнын хүмүүсийн хамт"
+  },
+  {
+    id: "uploaded-family-group-3",
+    url: "/assets/54a01190-71e5-419b-a1a5-6e7fcc11b83a.jpg",
+    caption: "Шагналын баярын дурсгалт өдөр"
+  },
+  {
+    id: "uploaded-honoree-portrait-2",
+    url: "/assets/451ab7a4-955b-4f2a-945c-145f14685a6d.jpg",
+    caption: "Хүндэтгэлийн арга хэмжээний үеэр"
+  },
+  {
+    id: "uploaded-family-group-4",
+    url: "/assets/419a67b4-22e2-4b4e-b8f0-dd4196b92497.jpg",
+    caption: "Цэцгийн баглаатай дурсгалын зураг"
+  },
+  {
+    id: "uploaded-family-group-5",
+    url: "/assets/90e46e65-423b-4b61-a492-5ff93e6f06d4.jpg",
+    caption: "Хамт олны баярын агшин"
+  },
+  {
+    id: "uploaded-honoree-portrait-3",
+    url: "/assets/8cf9c3be-5f7f-403b-972a-d8b482e22b1d.jpg",
+    caption: "Төрийн шагнал гардан авсан мөч"
+  },
+  {
+    id: "uploaded-honoree-with-official",
+    url: "/assets/9edb6469-83ea-43ec-a86e-1f01e06ad16d.jpg",
+    caption: "Хүндэтгэлийн гар барилтын агшин"
   }
 ];
 

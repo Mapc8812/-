@@ -6,10 +6,9 @@ import { InvitationConfig } from '../data/invitationData';
 interface HeroProps {
   config: InvitationConfig;
   onOpenRsvp: () => void;
-  onOpenDetails: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ config, onOpenRsvp, onOpenDetails }) => {
+export const Hero: React.FC<HeroProps> = ({ config, onOpenRsvp }) => {
   return (
     <section className="relative min-h-[92vh] flex flex-col items-center justify-center text-center px-4 pt-16 pb-12 overflow-hidden">
       {/* Background radial gold glow effect */}
@@ -101,13 +100,6 @@ export const Hero: React.FC<HeroProps> = ({ config, onOpenRsvp, onOpenDetails })
           <span>Хүрэлцэн ирэхээ мэдэгдэх (RSVP)</span>
         </button>
 
-        <button
-          onClick={onOpenDetails}
-          className="px-6 py-3.5 rounded-full glass-gold-card text-stone-200 hover:text-amber-300 hover:border-amber-400/60 font-medium text-sm sm:text-base tracking-wide transition-all duration-300 flex items-center gap-2 cursor-pointer"
-        >
-          <span>Дэлгэрэнгүй хөтөлбөр</span>
-          <ChevronDown className="w-4 h-4 text-amber-400 animate-bounce" />
-        </button>
       </div>
 
       {/* Scroll down indicator */}

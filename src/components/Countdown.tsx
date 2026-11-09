@@ -56,7 +56,7 @@ export const Countdown: React.FC<CountdownProps> = ({ config }) => {
   // Google Calendar URL generator
   const createGoogleCalendarUrl = () => {
     const title = encodeURIComponent(`Хөдөлмөрийн Гавьяаны Улаан Тугийн Одонгийн хүндэтгэлийн найр - ${config.honoreeName}`);
-    const details = encodeURIComponent(`Монгол Улсын Хөдөлмөрийн гавьяаны улаан тугийн одонгоор шагнагдсаны хүндэтгэлийн найр.\nБайршил: ${config.venueName}, ${config.venueRoom}\nДэг жаяг: ${config.dressCode}`);
+    const details = encodeURIComponent(`Монгол Улсын Хөдөлмөрийн гавьяаны улаан тугийн одонгоор шагнагдсаны хүндэтгэлийн найр.\nБайршил: ${config.venueName}, ${config.venueRoom}`);
     const location = encodeURIComponent(`${config.venueName}, ${config.venueAddress}`);
     
     // Formatting event dates (20261121T090000Z format approx)

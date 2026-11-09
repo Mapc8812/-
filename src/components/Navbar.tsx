@@ -19,8 +19,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRsvp }) => {
 
   const navLinks = [
     { label: 'Урилга', href: '#greeting' },
-    { label: 'Аялгуу', href: '#music' },
-    { label: 'Хөтөлбөр', href: '#details' },
     { label: 'Галерей', href: '#gallery' },
     { label: 'Байршил', href: '#location' },
     { label: 'QR Код', href: '#share' }

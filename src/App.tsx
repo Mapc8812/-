@@ -5,23 +5,19 @@
 
 import React, { useState, useEffect } from 'react';
 import { ParticleCanvas } from './components/ParticleCanvas';
-import { AudioPlayer } from './components/AudioPlayer';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Greeting } from './components/Greeting';
 import { Countdown } from './components/Countdown';
-import { EventDetails } from './components/EventDetails';
 import { PhotoGallery } from './components/PhotoGallery';
 import { LocationMap } from './components/LocationMap';
 import { RsvpForm } from './components/RsvpForm';
 import { ShareQrSection } from './components/ShareQrModal';
 import { Footer } from './components/Footer';
 import { EditEventModal } from './components/EditEventModal';
-import { CelebrationMusic } from './components/CelebrationMusic';
 import {
   initialInvitationConfig,
   InvitationConfig,
-  defaultProgramTimeline,
   defaultGalleryPhotos,
   GalleryPhoto
 } from './data/invitationData';
@@ -61,6 +57,16 @@ export default function App() {
         if (cleaned.length === 0) {
           localStorage.setItem('celebration_gallery_photos', JSON.stringify(defaultGalleryPhotos));
           return defaultGalleryPhotos;
+        }
+        if (localStorage.getItem('celebration_gallery_assets_seeded_v1') !== 'true') {
+          const existingIds = new Set(cleaned.map(photo => photo.id));
+          const merged = [
+            ...cleaned,
+            ...defaultGalleryPhotos.filter(photo => !existingIds.has(photo.id))
+          ];
+          localStorage.setItem('celebration_gallery_photos', JSON.stringify(merged));
+          localStorage.setItem('celebration_gallery_assets_seeded_v1', 'true');
+          return merged;
         }
         return cleaned;
       }
@@ -108,13 +114,6 @@ export default function App() {
     }
   };
 
-  const scrollToDetails = () => {
-    const detailsElem = document.getElementById('details');
-    if (detailsElem) {
-      detailsElem.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <div className="relative min-h-screen bg-[#08080A] text-[#E6E4DF] selection:bg-amber-500/30 selection:text-amber-200">
       {/* Golden Sparkling Ambient Canvas */}
@@ -130,9 +129,6 @@ export default function App() {
         aria-hidden="true" 
       />
 
-      {/* Floating Audio Player */}
-      <AudioPlayer />
-
       {/* Top Navigation */}
       <Navbar onOpenRsvp={scrollToRsvp} />
 
@@ -142,7 +138,6 @@ export default function App() {
         <Hero
           config={config}
           onOpenRsvp={scrollToRsvp}
-          onOpenDetails={scrollToDetails}
         />
 
         {/* Formal Invitation Greeting & Decree Tribute */}
@@ -151,17 +146,8 @@ export default function App() {
           onEditClick={() => setIsEditModalOpen(true)}
         />
 
-        {/* Celebration Music Video & Player: Дэлгэр найрын хоймор */}
-        <CelebrationMusic />
-
         {/* Live Countdown Timer */}
         <Countdown config={config} />
-
-        {/* Event Details & Timeline in Gold Framed Card */}
-        <EventDetails
-          config={config}
-          timeline={defaultProgramTimeline}
-        />
 
         {/* Photo Gallery & Modal Lightbox */}
         <PhotoGallery
